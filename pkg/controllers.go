@@ -63,29 +63,27 @@ func updateProduct(c *gin.Context) {
 	}
 	productID := c.Param("id")
 
-	// Bind the JSON request body to the product struct
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
 	// Find the product in the database by ID
 	if err := db.Where("id = ?", productID).First(&product).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
 		return
 	}
 
-	// Convert the price string to an integer
-	price, err := strconv.Atoi(c.PostForm("price"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid price"})
-		return
+	// Update the product with the new values
+	if c.PostForm("title") != "" {
+		product.Title = c.PostForm("title")
 	}
-
-	// Update the product with the new information
-	product.Title = c.PostForm("title")
-	product.Description = c.PostForm("author")
-	product.Price = price
+	if c.PostForm("author") != "" {
+		product.Description = c.PostForm("author")
+	}
+	if c.PostForm("price") != "" {
+		newPrice, err := strconv.Atoi(c.PostForm("price"))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid price"})
+			return
+		}
+		product.Price = newPrice
+	}
 
 	// Save the changes to the database
 	if err := db.Save(&product).Error; err != nil {
