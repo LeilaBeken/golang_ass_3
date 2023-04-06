@@ -1,18 +1,21 @@
 package pkg
 
 import (
-    "gorm.io/driver/postgres"
-    "gorm.io/gorm"
 	md "github.com/LeilaBeken/golang_ass_3/models"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func GetDB() (*gorm.DB, error) {
-    dsn := "user=postgres password=belelik04 dbname=golang3 host=localhost port=5432 sslmode=disable TimeZone=UTC"
+    dsn := "postgres://belelik080504:q6PV1GjkWZOb@ep-lucky-union-249296.ap-southeast-1.aws.neon.tech/neondb"
 
+    // Open a database connection
     db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-    if err != nil {panic("failed to connect database")}
+    if err != nil {
+        panic(err)
+    }
 
-	db.AutoMigrate(&md.Book{})
+    db.AutoMigrate(&md.Book{})
 
     return db, nil
 }

@@ -9,11 +9,11 @@ func Routes() {
 	router := gin.Default()
 	router.GET("/products", listProducts)
 	router.GET("/products/:id", getProduct)
-	router.POST("/productsCreate", createProduct)
-	router.DELETE("/productsDelete/:id", deleteProduct)
+	router.POST("/products", createProduct)
+	router.DELETE("/product/:id", deleteProduct)
 	router.GET("/search", searchProducts)
 	router.GET("/sort", sortProducts)
-	router.PUT("/productsUpdate/:id", updateProduct)
+	router.PUT("/product/:id", updateProduct)
 
 
 	// Start the server
