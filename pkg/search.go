@@ -15,7 +15,7 @@ func searchProducts(c *gin.Context) {
     products := []md.Book{}
 	db, err := GetDB()
 	if err != nil {panic(err)}
-    db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", searchQuery)).Find(&products)
+    db.Where("title LIKE ?", fmt.Sprintf("%%%s%%", searchQuery)).Find(&products)
 
     // Return the products in the response
     c.JSON(http.StatusOK, products)
