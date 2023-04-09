@@ -17,3 +17,5 @@ RUN go build -o server .
  
 # Run the server executable
 CMD [ "/app/server" ]
+
+EXPOSE 8080
