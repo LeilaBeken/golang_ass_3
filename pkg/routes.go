@@ -7,13 +7,13 @@ import (
 //defining routes
 func Routes() {
 	router := gin.Default()
-	router.GET("/products", listProducts)
-	router.GET("/products/:id", getProduct)
-	router.POST("/products", createProduct)
-	router.DELETE("/product/:id", deleteProduct)
-	router.GET("/search", searchProducts)
-	router.GET("/sort", sortProducts)
-	router.PUT("/product/:id", updateProduct)
+	router.GET("/books", listProducts)
+	router.GET("/books/:id", getProduct)
+	router.POST("/books", createProduct)
+	router.DELETE("/books/:id", deleteProduct)
+	router.GET("/books", searchProducts)
+	router.GET("/books", sortProducts)
+	router.PUT("/books/:id", updateProduct)
 
 
 	// Start the server
