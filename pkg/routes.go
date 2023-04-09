@@ -11,8 +11,6 @@ func Routes() {
 	router.GET("/books/:id", getProduct)
 	router.POST("/books", createProduct)
 	router.DELETE("/books/:id", deleteProduct)
-	router.GET("/books", searchProducts)
-	router.GET("/books", sortProducts)
 	router.PUT("/books/:id", updateProduct)
 
 

@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -12,7 +13,20 @@ func listProducts(c *gin.Context) {
 	db, err := GetDB()
 	if err != nil {panic(err)}
 	products := []md.Book{}
-	db.Find(&products)
+	// Read the "sort_by" and "sort_order" query parameters
+	sortBy := c.Query("sort_by")
+    sortOrder := c.Query("sort_order")
+	searchQuery := c.Query("search")
+	if searchQuery != "" {
+		db.Where("title LIKE ?", fmt.Sprintf("%%%s%%", searchQuery)).Find(&products)
+	} else {
+		db.Find(&products)
+	}
+    if sortBy != "" && sortOrder != "" {
+		query := db.Order(fmt.Sprintf("%s %s", sortBy, sortOrder))
+		query.Find(&products)		
+	}
+
 	c.JSON(http.StatusOK, products)
 }
 
